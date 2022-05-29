@@ -1,0 +1,47 @@
+.answer {
+  display: flex;
+  height: 100px;
+  margin: 10px;
+  min-width: 500px;
+  width: 50%;
+}
+
+.answer__content {
+  position: relative;
+  display: flex;
+  flex: 1;
+}
+
+.answer__front {
+  color: #000000;
+  background-color: white;
+  align-items: center;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.answer__front,
+.answer__back {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.answer__letter {
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-right: 15px;
+}
+
+.answer__value {
+  font-size: 1.3rem;
+  font-weight: 700;
+}

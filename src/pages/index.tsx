@@ -1,15 +1,23 @@
 import type { NextPage } from 'next';
+import { useState } from 'react';
 import Question from '../components/Question';
 import AnswerModel from '../models/Answer';
 import QuestionModel from '../models/Question';
 
+const questionMock = new QuestionModel(1, 'Melhor cor?', [
+  AnswerModel.wrong('Verde'),
+  AnswerModel.wrong('Vermelho'),
+  AnswerModel.wrong('Azul'),
+  AnswerModel.right('Preta'),
+]);
+
 const Home: NextPage = () => {
-  const question = new QuestionModel(1, 'Melhor cor?', [
-    AnswerModel.wrong('Verde'),
-    AnswerModel.wrong('Vermelho'),
-    AnswerModel.wrong('Azul'),
-    AnswerModel.wrong('Preta'),
-  ]);
+  const [question, setQuestion] = useState(questionMock);
+
+  const answerReceived = (index: number) => {
+    const questionAnswered = question.answerQuestion(index);
+    setQuestion(questionAnswered);
+  };
 
   return (
     <div
@@ -20,7 +28,7 @@ const Home: NextPage = () => {
         alignItems: 'center',
       }}
     >
-      <Question value={question} />
+      <Question question={question} answerReceived={answerReceived} />
     </div>
   );
 };

@@ -11,12 +11,13 @@ const letters = [
 ];
 
 interface QuestionProps {
-  value: QuestionModel;
+  question: QuestionModel;
+  answerReceived: (index: number) => void;
 }
 
-const Question: React.FC<QuestionProps> = ({ value }) => {
+const Question: React.FC<QuestionProps> = ({ question, answerReceived }) => {
   const renderAnswers = () => {
-    return value.answers.map((answer, index) => {
+    return question.answers.map((answer, index) => {
       return (
         <Answer
           answer={answer}
@@ -24,6 +25,7 @@ const Question: React.FC<QuestionProps> = ({ value }) => {
           letter={letters[index].value}
           letterBackgroundColor={letters[index].color}
           key={index}
+          onClick={answerReceived}
         />
       );
     });
@@ -31,7 +33,7 @@ const Question: React.FC<QuestionProps> = ({ value }) => {
 
   return (
     <div className={styles.question}>
-      <Label text={value.label} />
+      <Label text={question.label} />
       {renderAnswers()}
     </div>
   );

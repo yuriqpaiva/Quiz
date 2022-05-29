@@ -7,6 +7,7 @@ interface AnswerProps {
   index: number;
   letter: string;
   letterBackgroundColor: string;
+  onClick: (index: number) => void;
 }
 
 const Answer: React.FC<AnswerProps> = ({
@@ -14,20 +15,36 @@ const Answer: React.FC<AnswerProps> = ({
   index,
   letter,
   letterBackgroundColor,
+  onClick,
 }) => {
   return (
-    <div className={styles.answer}>
+    <div className={styles.answer} onClick={() => onClick(index)}>
       <div className={styles.answer__content}>
-        <div className={styles.answer__front}>
-          <div
-            className={styles.answer__letter}
-            style={{ backgroundColor: letterBackgroundColor }}
-          >
-            {letter}
+        {!answer.revealed ? (
+          <div className={styles.answer__front}>
+            <div
+              className={styles.answer__letter}
+              style={{ backgroundColor: letterBackgroundColor }}
+            >
+              {letter}
+            </div>
+            <div className={styles.answer__value}>{answer.value}</div>
           </div>
-          <div className={styles.answer__value}>{answer.value}</div>
-        </div>
-        <div className={styles.answer__back}></div>
+        ) : (
+          <div className={styles.answer__back}>
+            {answer.right ? (
+              <div className={styles.answer__correct}>
+                <div>A resposta certa é...</div>
+                <div className={styles.answer__value}>{answer.value}</div>
+              </div>
+            ) : (
+              <div className={styles.answer__incorrect}>
+                <div>A resposta informada está errada</div>
+                <div className={styles.answer__value}>{answer.value}</div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -19,6 +19,12 @@ const Home: NextPage = () => {
     setQuestion(questionAnswered);
   };
 
+  const timesUp = () => {
+    if (question.notAnswered) {
+      setQuestion(question.answerQuestion(-1));
+    }
+  };
+
   return (
     <div
       style={{
@@ -28,7 +34,11 @@ const Home: NextPage = () => {
         alignItems: 'center',
       }}
     >
-      <Question question={question} answerReceived={answerReceived} />
+      <Question
+        question={question}
+        answerReceived={answerReceived}
+        timesUp={timesUp}
+      />
     </div>
   );
 };

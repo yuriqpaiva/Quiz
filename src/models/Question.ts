@@ -47,6 +47,10 @@ class QuestionModel {
     return false;
   }
 
+  get notAnswered() {
+    return !this.answered
+  }
+
   answerQuestion(index: number): QuestionModel {
     const gotItRight = this.answers[index]?.right;
     const answers = this._answers.map((answer, answerIndex) => {

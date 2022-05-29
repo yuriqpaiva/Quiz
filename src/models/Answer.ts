@@ -28,6 +28,18 @@ class AnswerModel {
   get revealed() {
     return this._revealed;
   }
+
+  reveal() {
+    return new AnswerModel(this.value, this.right, true);
+  }
+
+  toObject() {
+    return {
+      value: this.value,
+      right: this.right,
+      revealed: this.revealed,
+    };
+  }
 }
 
 export default AnswerModel;

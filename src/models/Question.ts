@@ -6,7 +6,12 @@ class QuestionModel {
   private _answers: AnswerModel[];
   private _right: boolean;
 
-  constructor(id: number, label: string, answers: any[], right: boolean) {
+  constructor(
+    id: number,
+    label: string,
+    answers: any[],
+    right: boolean = false
+  ) {
     this._id = id;
     this._label = label;
     this._answers = answers;
@@ -36,6 +41,15 @@ class QuestionModel {
 
     return false;
   }
+
+  // toObject() {
+  //   return {
+  //     id: this.id,
+  //     label: this.label,
+  //     answers: this.answers,
+  //     right: this.right,
+  //   };
+  // }
 }
 
 export default QuestionModel;

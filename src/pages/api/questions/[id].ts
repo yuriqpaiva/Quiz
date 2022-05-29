@@ -1,14 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import questions from '../questionsDatabase';
 
-type Data = {
-  name: string;
-};
-
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
 
-  res.status(200).json({ name: `rota ${id}` });
+  res.status(200).json({ questao: questions[0].id });
 }

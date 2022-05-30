@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import Button from '../components/Button';
 import Question from '../components/Question';
+import Quiz from '../components/Quiz';
 import AnswerModel from '../models/Answer';
 import QuestionModel from '../models/Question';
 
@@ -28,6 +29,10 @@ const Home: NextPage = () => {
     }
   };
 
+  const answeredQuestion = (question: QuestionModel) => {};
+
+  const goToNextStep = () => {};
+
   return (
     <div
       style={{
@@ -38,13 +43,12 @@ const Home: NextPage = () => {
         flexDirection: 'column',
       }}
     >
-      <Question
+      <Quiz
         question={question}
-        answerReceived={answerReceived}
-        timesUp={timesUp}
-        timeToAnswer={2}
+        lastQuestion={true}
+        onAnswer={answeredQuestion}
+        goToNextStep={goToNextStep}
       />
-      <Button text="Próxima" href='/result'/>
     </div>
   );
 };

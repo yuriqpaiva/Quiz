@@ -2,6 +2,7 @@ import { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Button from '../components/Button';
+import Layout from '../components/Layout';
 import Statistic from '../components/Statistic';
 import styles from '../styles/Result.module.css';
 
@@ -25,6 +26,7 @@ const Result: NextPage = () => {
 
   return router.isReady ? (
     <div className={styles.result}>
+      <Layout />
       <h1>Resultado</h1>
       <div style={{ display: 'flex' }}>
         <Statistic text="Perguntas" value={total} />
@@ -39,7 +41,7 @@ const Result: NextPage = () => {
           backgroundColor="#DE6A33"
         />
       </div>
-      <Button href='/' text='Tentar novamente'/>
+      <Button href="/quiz" text="Tentar novamente" />
     </div>
   ) : (
     <div />

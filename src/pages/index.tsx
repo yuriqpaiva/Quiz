@@ -16,6 +16,7 @@ const BASE_URL = 'http://localhost:3000/api';
 const Home: NextPage = () => {
   const [ids, setIds] = useState<number[]>([]);
   const [question, setQuestion] = useState(questionMock);
+  const [correctAnswersCount, setCorrectAnswersCount] = useState<number>(0);
 
   const loadQuestionsIds = async () => {
     const res = await fetch(`${BASE_URL}/quiz`);
@@ -39,20 +40,12 @@ const Home: NextPage = () => {
     ids.length > 0 && loadQuestion(ids[0]);
   }, [ids]);
 
-  const answerReceived = (index: number) => {
-    if (question.notAnswered) {
-      const questionAnswered = question.answerQuestion(index);
-      setQuestion(questionAnswered);
+  const answerQuestion = (answeredQuestion: QuestionModel) => {
+    setQuestion(answeredQuestion);
+    if (answeredQuestion.right) {
+      setCorrectAnswersCount((counter) => counter + 1);
     }
   };
-
-  const timesUp = () => {
-    if (question.notAnswered) {
-      setQuestion(question.answerQuestion(-1));
-    }
-  };
-
-  const answeredQuestion = (question: QuestionModel) => {};
 
   const goToNextStep = () => {};
 
@@ -69,7 +62,7 @@ const Home: NextPage = () => {
       <Quiz
         question={question}
         lastQuestion={true}
-        onAnswer={answeredQuestion}
+        onAnswer={answerQuestion}
         goToNextStep={goToNextStep}
       />
     </div>

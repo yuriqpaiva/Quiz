@@ -15,12 +15,14 @@ interface QuestionProps {
   question: QuestionModel;
   answerReceived: (index: number) => void;
   timesUp: () => void;
+  timeToAnswer?: number;
 }
 
 const Question: React.FC<QuestionProps> = ({
   question,
   answerReceived,
   timesUp,
+  timeToAnswer
 }) => {
   const renderAnswers = () => {
     return question.answers.map((answer, index) => {
@@ -40,7 +42,7 @@ const Question: React.FC<QuestionProps> = ({
   return (
     <div className={styles.question}>
       <Label text={question.label} />
-      <Timer duration={10} timesUp={timesUp} />
+      <Timer duration={timeToAnswer || 10} timesUp={timesUp} />
       {renderAnswers()}
     </div>
   );

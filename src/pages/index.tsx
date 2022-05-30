@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
+import Button from '../components/Button';
 import Question from '../components/Question';
 import AnswerModel from '../models/Answer';
 import QuestionModel from '../models/Question';
@@ -15,8 +16,10 @@ const Home: NextPage = () => {
   const [question, setQuestion] = useState(questionMock);
 
   const answerReceived = (index: number) => {
-    const questionAnswered = question.answerQuestion(index);
-    setQuestion(questionAnswered);
+    if (question.notAnswered) {
+      const questionAnswered = question.answerQuestion(index);
+      setQuestion(questionAnswered);
+    }
   };
 
   const timesUp = () => {
@@ -32,13 +35,16 @@ const Home: NextPage = () => {
         height: '100vh',
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'column',
       }}
     >
       <Question
         question={question}
         answerReceived={answerReceived}
         timesUp={timesUp}
+        timeToAnswer={2}
       />
+      <Button text="Próxima" href='/result'/>
     </div>
   );
 };

@@ -1,21 +1,16 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import Quiz from '../components/Quiz';
-import AnswerModel from '../models/Answer';
 import QuestionModel from '../models/Question';
-
-const questionMock = new QuestionModel(1, 'Melhor cor?', [
-  AnswerModel.wrong('Verde'),
-  AnswerModel.wrong('Vermelho'),
-  AnswerModel.wrong('Azul'),
-  AnswerModel.right('Preta'),
-]);
+import { useRouter } from 'next/router';
 
 const BASE_URL = 'http://localhost:3000/api';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   const [ids, setIds] = useState<number[]>([]);
-  const [question, setQuestion] = useState(questionMock);
+  const [question, setQuestion] = useState<QuestionModel>();
   const [correctAnswersCount, setCorrectAnswersCount] = useState<number>(0);
 
   const loadQuestionsIds = async () => {
@@ -47,7 +42,33 @@ const Home: NextPage = () => {
     }
   };
 
-  const goToNextStep = () => {};
+  const nextQuestionId = () => {
+    if (question) {
+      const nextIndex = ids.indexOf(question.id) + 1;
+
+      return ids[nextIndex];
+    }
+  };
+
+  const goToNextStep = () => {
+    const nextId = nextQuestionId();
+
+    nextId ? goToNextQuestion(nextId) : conclude();
+  };
+
+  const goToNextQuestion = (nextId: number) => {
+    loadQuestion(nextId);
+  };
+
+  const conclude = () => {
+    router.push({
+      pathname: '/result',
+      query: {
+        total: ids.length,
+        correctAnswers: correctAnswersCount,
+      },
+    });
+  };
 
   return (
     <div
@@ -59,12 +80,14 @@ const Home: NextPage = () => {
         flexDirection: 'column',
       }}
     >
-      <Quiz
-        question={question}
-        lastQuestion={true}
-        onAnswer={answerQuestion}
-        goToNextStep={goToNextStep}
-      />
+      {question && (
+        <Quiz
+          question={question}
+          lastQuestion={nextQuestionId() ? false : true}
+          onAnswer={answerQuestion}
+          goToNextStep={goToNextStep}
+        />
+      )}
     </div>
   );
 };

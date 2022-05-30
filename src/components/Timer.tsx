@@ -5,6 +5,7 @@ import styles from '../styles/Timer.module.css';
 interface TimerProps {
   duration: number;
   timesUp: () => void;
+  key: number;
 }
 
 const Timer: React.FC<TimerProps> = ({ duration, timesUp }) => {

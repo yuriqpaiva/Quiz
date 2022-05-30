@@ -28,7 +28,7 @@ const Quiz: React.FC<QuizProps> = ({
       {question && (
         <Question
           question={question}
-          timeToAnswer={6}
+          timeToAnswer={5}
           answerReceived={answerReceived}
           timesUp={goToNextStep}
         />

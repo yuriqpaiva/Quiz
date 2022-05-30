@@ -22,7 +22,7 @@ const Question: React.FC<QuestionProps> = ({
   question,
   answerReceived,
   timesUp,
-  timeToAnswer
+  timeToAnswer,
 }) => {
   const renderAnswers = () => {
     return question.answers.map((answer, index) => {
@@ -32,7 +32,7 @@ const Question: React.FC<QuestionProps> = ({
           index={index}
           letter={letters[index].value}
           letterBackgroundColor={letters[index].color}
-          key={index}
+          key={`${question.id}${index}`}
           onClick={answerReceived}
         />
       );
@@ -42,7 +42,11 @@ const Question: React.FC<QuestionProps> = ({
   return (
     <div className={styles.question}>
       <Label text={question.label} />
-      <Timer duration={timeToAnswer || 10} timesUp={timesUp} />
+      <Timer
+        duration={timeToAnswer || 10}
+        timesUp={timesUp}
+        key={question.id}
+      />
       {renderAnswers()}
     </div>
   );

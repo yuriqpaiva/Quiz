@@ -48,7 +48,7 @@ class QuestionModel {
   }
 
   get notAnswered() {
-    return !this.answered
+    return !this.answered;
   }
 
   answerQuestion(index: number): QuestionModel {
@@ -76,6 +76,19 @@ class QuestionModel {
       right: this.right,
       answered: this.answered,
     };
+  }
+
+  static fromObject(questionObject: QuestionModel): QuestionModel {
+    const answers = questionObject.answers.map((answer) =>
+      AnswerModel.fromObject(answer)
+    );
+
+    return new QuestionModel(
+      questionObject.id,
+      questionObject.label,
+      answers,
+      questionObject.right
+    );
   }
 }
 

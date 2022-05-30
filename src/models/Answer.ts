@@ -40,6 +40,10 @@ class AnswerModel {
       revealed: this.revealed,
     };
   }
+
+  static fromObject({ value, right, revealed }: AnswerModel) {
+    return new AnswerModel(value, right, revealed);
+  }
 }
 
 export default AnswerModel;

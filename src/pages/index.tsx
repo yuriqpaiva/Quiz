@@ -1,7 +1,5 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
-import Button from '../components/Button';
-import Question from '../components/Question';
+import { useEffect, useState } from 'react';
 import Quiz from '../components/Quiz';
 import AnswerModel from '../models/Answer';
 import QuestionModel from '../models/Question';
@@ -13,8 +11,33 @@ const questionMock = new QuestionModel(1, 'Melhor cor?', [
   AnswerModel.right('Preta'),
 ]);
 
+const BASE_URL = 'http://localhost:3000/api';
+
 const Home: NextPage = () => {
+  const [ids, setIds] = useState<number[]>([]);
   const [question, setQuestion] = useState(questionMock);
+
+  const loadQuestionsIds = async () => {
+    const res = await fetch(`${BASE_URL}/quiz`);
+    const questionsIds = await res.json();
+    setIds(questionsIds);
+  };
+
+  const loadQuestion = async (questionId: number) => {
+    const res = await fetch(`${BASE_URL}/questions/${questionId}`);
+    const questionObject = await res.json(); // doesn't return a class, just an object
+
+    const newQuestion = QuestionModel.fromObject(questionObject);
+    setQuestion(newQuestion);
+  };
+
+  useEffect(() => {
+    loadQuestionsIds();
+  }, []);
+
+  useEffect(() => {
+    ids.length > 0 && loadQuestion(ids[0]);
+  }, [ids]);
 
   const answerReceived = (index: number) => {
     if (question.notAnswered) {
